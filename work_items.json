@@ -1,0 +1,10 @@
+{
+    "variables": {
+        "link": "https://www.reuters.com/",
+        "search_term": "brazil",
+        "category": "Market",
+        "months": 5,
+        "columns": ["title", "date", "pic_filename", "count_phases", "money_in_title"]
+    },
+    "workItems": []
+}
