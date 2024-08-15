@@ -3,7 +3,9 @@ from datetime import datetime
 
 import pandas as pd
 from dateutil.relativedelta import relativedelta
+from robocorp import browser
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -22,15 +24,30 @@ class NewsScraper:
         self.category = category
         self.months = months
         self.columns = columns
-        self.driver = webdriver.Chrome()
+        self.driver = None # self.driver = webdriver.Chrome()
         self.items = []
+
+    # def set_chrome_options(self):
+    #     options = webdriver.ChromeOptions()
+    #     options.add_argument('--headless')
+    #     options.add_argument('--no-sandbox')
+    #     options.add_argument("--disable-extensions")
+    #     options.add_argument("--disable-gpu")
+    #     options.add_argument('--disable-web-security')
+    #     options.add_argument("--start-maximized")
+    #     options.add_argument('--remote-debugging-port=9222')
+    #     options.add_experimental_option("excludeSwitches", ["enable-logging"])
+    #     return options
+
+    def set_webdriver(self):
+        self.driver = webdriver.Chrome()
 
     def open_site(self):
         self.driver.get(self.url)
         logger.info(f"Opened site: {self.url}")
 
     def search(self):
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "search-bar__icon__ORXTq")))
+        WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "search-bar__icon__ORXTq")))
         self.driver.find_element(By.CLASS_NAME, "search-bar__icon__ORXTq").click()
         input = self.driver.find_element(By.TAG_NAME, 'input')
         input.send_keys(self.search_term)
@@ -96,7 +113,7 @@ class NewsScraper:
 
 
     def close_site(self):
-        self.driver.close()
+        self.driver.quit()
         logger.info(f"Driver closed")
 
         
