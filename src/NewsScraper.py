@@ -4,6 +4,7 @@ from datetime import datetime
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 from robocorp import browser
+from RPA.Browser.Selenium import Selenium
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.action_chains import ActionChains
@@ -12,6 +13,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
+from .CustomSelenium import CustomSelenium
 from .utils import download_img, setup_logger
 
 logger = setup_logger()
@@ -27,26 +29,18 @@ class NewsScraper:
         self.driver = None # self.driver = webdriver.Chrome()
         self.items = []
 
-    # def set_chrome_options(self):
-    #     options = webdriver.ChromeOptions()
-    #     options.add_argument('--headless')
-    #     options.add_argument('--no-sandbox')
-    #     options.add_argument("--disable-extensions")
-    #     options.add_argument("--disable-gpu")
-    #     options.add_argument('--disable-web-security')
-    #     options.add_argument("--start-maximized")
-    #     options.add_argument('--remote-debugging-port=9222')
-    #     options.add_experimental_option("excludeSwitches", ["enable-logging"])
-    #     return options
 
     def set_webdriver(self):
-        self.driver = webdriver.Chrome()
+        # selenium = CustomSelenium()
+        # self.driver = selenium.set_webdriver()
+        self.driver = webdriver.Chrome()  # comment this and uncomment above to headless
 
     def open_site(self):
         self.driver.get(self.url)
         logger.info(f"Opened site: {self.url}")
 
     def search(self):
+        # self.driver.save_screenshot('output/screenshot.png') # shows bloked site
         WebDriverWait(self.driver, 20).until(EC.presence_of_element_located((By.CLASS_NAME, "search-bar__icon__ORXTq")))
         self.driver.find_element(By.CLASS_NAME, "search-bar__icon__ORXTq").click()
         input = self.driver.find_element(By.TAG_NAME, 'input')
