@@ -16,14 +16,13 @@ This project is an RPA (Robotic Process Automation) application designed to auto
 - [X] Data extraction: title, date, description, and image
 - [X] Storage of extracted data in Excel format
 - [X] Image downloading and processing
-- [X] Robust error handling and logging
 
 
 ## ✨ Technologies Used
 
 - [X] Python
 - [X] Selenium (via rpaframework)
-- [X] Robocorp WorkItems for input/output management
+- [ ] Robocorp WorkItems for input/output management
 - [X] Pandas (for data manipulation)
 - [X] Excel file generation
 
